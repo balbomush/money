@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Exchange</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+</head>
+<body>
+<div>
+        <select id="from">
+        {% for rate in rates %}
+            <option value="{{rate.2}}">{{ rate.1 }}</option>
+        {% endfor %}
+        </select>
+конвертировать в
+
+        <select id="to">
+        {% for rate in rates %}
+            <option value="{{rate.2}}">{{ rate.1 }}</option>
+        {% endfor %}
+        </select>
+    </div>
+<p></p>
+<input type="number" min="0" id="value">
+    <input id="result" disabled></input>
+<script>
+    $("#value").keyup(function(){
+        let number = document.getElementById('value').value;
+        $.ajax({
+        url: 'changeto/',
+        method: "GET",
+        data: {"number": number,
+        "from":document.getElementById('from').value,
+        "to":document.getElementById('to').value},
+        success: function(data) {
+		document.getElementById('result').value = data;
+       }
+        });
+    });
+
+</script>
+</body>
+</html>
